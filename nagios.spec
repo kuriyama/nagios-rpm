@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama14
+Release:        3%{?dist}.kuriyama15
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,18 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama15
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama15)
+- Fix bugs found by a cppcheck static-analysis follow-up to the
+  security review: an unchecked-malloc crash reachable from
+  status.cgi?host=..., an off-by-one stack OOB in config.cgi's
+  $ARGn$ macro display, an unchecked calloc() in worker
+  registration, an unbounded sscanf() landmine, and several
+  cosmetic printf format-specifier fixes
+- Fix pre-existing t-tap link failures in test_events/test_cgiauth
+  (missing $(LIBS)/$(SRC_COMMON)/shared.o in their link recipes),
+  found while verifying the above in a container
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama14
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama14)
 - Add t-tap regression tests for cgi/getcgi.c URL-decoding and
