@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama13
+Release:        3%{?dist}.kuriyama14
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,17 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama14
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama14)
+- Add t-tap regression tests for cgi/getcgi.c URL-decoding and
+  cgi/cgiauth.c authorization gating; fixes an uninitialized-variable
+  bug in hex_to_char() found while writing the tests (could return an
+  unpredictable byte for a malformed %-escape in any CGI request)
+- Use a larger stdio write buffer for status.dat/retention.dat
+  (setvbuf only, no format/content change) to reduce write() syscall
+  count on the single-threaded core's periodic status-file rewrite,
+  per this session's check-engine efficiency analysis
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama13
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama13)
 - Remove dead sanitize_cgi_input() (unconditional early-return no-op,
