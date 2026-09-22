@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama11
+Release:        3%{?dist}.kuriyama12
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,13 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama12
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama12)
+- Fix t-tap test suite build failures under HAVE_SSL (unknown type
+  'SSL' / undefined reference to my_ssl_connect et al). Test-only
+  change with no effect on packaged output: %%check does not run
+  t-tap, and none of these files are referenced by %%files
+
 * Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama11
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama11)
 - Fix a locale-dependent heap-buffer-overflow in the JSON CGIs' string
