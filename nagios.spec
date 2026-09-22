@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama12
+Release:        3%{?dist}.kuriyama13
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,19 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama13
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama13)
+- Remove dead sanitize_cgi_input() (unconditional early-return no-op,
+  confirmed dead for years) from cgi/getcgi.c
+- Fix realloc()-failure memory-safety bugs found by a security review
+  across cgi/getcgi.c, cgi/jsonutils.c, cgi/cgiutils.c, lib/kvvec.c,
+  base/workers.c, lib/worker.c: a double-free (kvvec), two
+  NULL-pointer-write crashes reachable via transient OOM during
+  worker registration / plugin output collection, a crash reachable
+  via OOM while parsing the client-controlled Accept-Language header,
+  and two plain leaks-on-OOM. Same bug class as the kuriyama11
+  json_escape_string() fix
+
 * Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama12
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama12)
 - Fix t-tap test suite build failures under HAVE_SSL (unknown type
