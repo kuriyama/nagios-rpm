@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama2
+Release:        3%{?dist}.kuriyama3
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,12 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama3
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama3)
+- Replace the index.html/side.html/main.html frameset with a TypeScript
+  SPA (nav + unified host/service search + dashboard). Build output is
+  committed to html/js/nagios-app.js; no Node/npm BuildRequires needed
+
 * Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama2
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama2)
 - Remove statuswrl.cgi (VRML) and statuswml.cgi (WAP/WML); both were
