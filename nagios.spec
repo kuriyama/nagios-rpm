@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}
+Release:        3%{?dist}.kuriyama1
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,14 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama1
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama1)
+- Remove PHP/AngularJS status map (map.php); statusmap.cgi remains
+- Replace PHP web UI shell (index/side/main.php, config.inc.php,
+  includes/utils.inc.php) with static HTML generated at build time;
+  drops the nagios.org update-check/RSS/page-tour code along with it
+- Requires: php dropped (html/ no longer contains any .php files)
+
 * Thu Jan 25 2024 Fedora Release Engineering <releng@fedoraproject.org> - 4.4.14-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_40_Mass_Rebuild
 
