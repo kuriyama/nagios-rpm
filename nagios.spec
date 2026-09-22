@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama17
+Release:        3%{?dist}.kuriyama18
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,14 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama18
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama18)
+- Port trends.html off the vendored AngularJS 1.3.9 + D3 + Bootstrap
+  3.3.7 stack onto the TypeScript SPA (hand-rolled SVG timeline, no
+  new dependency). histogram.html is not yet ported, so the vendor
+  stack itself stays in place for now (still needed by histogram);
+  trends.cgi's PNG-export path is untouched
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama17
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama17)
 - Add opt-in browser memory/perf debug instrumentation to the webui
