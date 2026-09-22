@@ -59,7 +59,7 @@ BuildRequires:  perl(CPAN)
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(ExtUtils::Embed)
 BuildRequires:  perl(Test::Harness)
-%if 0%{?el6}%{?fedora}
+%if 0%{?el6}%{?fedora} && "%{_vendor}" != "amazon"
 BuildRequires:  perl(Test::HTML::Lint)
 %endif
 BuildRequires:  perl(Test::More)
