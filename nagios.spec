@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama8
+Release:        3%{?dist}.kuriyama9
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,11 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama9
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama9)
+- Remove dead WAP/WML output branches from cmd.cgi (unreachable since
+  statuswml.cgi was removed in kuriyama2)
+
 * Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama8
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama8)
 - Add Acknowledge/Schedule Downtime quick actions to the hosts/services
