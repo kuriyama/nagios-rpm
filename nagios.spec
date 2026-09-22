@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama1
+Release:        3%{?dist}.kuriyama2
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,11 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama2
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama2)
+- Remove statuswrl.cgi (VRML) and statuswml.cgi (WAP/WML); both were
+  unreachable from the UI and target long-dead client technologies
+
 * Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama1
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama1)
 - Remove PHP/AngularJS status map (map.php); statusmap.cgi remains
