@@ -34,20 +34,6 @@ diff -up ./common/Makefile.in.fix_localstatedir ./common/Makefile.in
  CFGDIR=@sysconfdir@
  BINDIR=@bindir@
  CGIDIR=@cgibindir@
-diff -up ./html/config.inc.php.in.fix_localstatedir ./html/config.inc.php.in
---- ./html/config.inc.php.in.fix_localstatedir	2019-01-16 13:35:06.875169375 -0600
-+++ ./html/config.inc.php.in	2019-01-16 14:25:51.436714786 -0600
-@@ -9,8 +9,8 @@ $cfg['cgi_base_url']='@cgiurl@';
- 
- // FILE LOCATION DEFAULTS
- $cfg['main_config_file']='@sysconfdir@/nagios.cfg';  // default location of the main Nagios config file
--$cfg['status_file']='@localstatedir@/status.dat'; // default location of Nagios status file
--$cfg['state_retention_file']='@localstatedir@/retention.dat'; // default location of Nagios retention file
-+$cfg['status_file']='@localstatedir@/spool/nagios/status.dat'; // default location of Nagios status file
-+$cfg['state_retention_file']='@localstatedir@/spool/nagios/retention.dat'; // default location of Nagios retention file
- 
- 
- 
 diff -up ./html/Makefile.in.fix_localstatedir ./html/Makefile.in
 --- ./html/Makefile.in.fix_localstatedir	2019-01-16 13:37:18.936977949 -0600
 +++ ./html/Makefile.in	2019-01-16 13:37:36.645684091 -0600

@@ -73,7 +73,6 @@ BuildRequires:  libtool
 BuildRequires: checkpolicy, selinux-policy-devel
 
 Requires:       httpd
-Requires:       php
 Requires:       %{_bindir}/mail
 Requires:       nagios-common
 Requires:       user(nagios)
@@ -434,7 +433,6 @@ fi
 
 %attr(0640,root,nagios) %config(noreplace) %{_sysconfdir}/%{name}/private/resource.cfg
 %attr(0640,root,apache) %config(noreplace) %{_sysconfdir}/%{name}/passwd
-%attr(0640,root,apache) %config(noreplace) %{_datadir}/%{name}/html/config.inc.php
 %attr(2775,nagios,nagios) %dir %{_localstatedir}/spool/%{name}/cmd
 %attr(0750,nagios,nagios) %dir %{_localstatedir}/run/%{name}
 %attr(0750,nagios,nagios) %dir %{_localstatedir}/log/%{name}
