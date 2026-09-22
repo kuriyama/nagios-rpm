@@ -44,7 +44,14 @@ jobs:
           echo "Fetching $ref (expecting commit $commit)"
           git remote set-branches origin '*'
           git fetch --depth 1 origin "$ref"
-          git checkout "$commit"
+          # detached HEAD ではなく "$ref" という名前のローカルブランチを
+          # 作る。generate-source-tarball.sh はデフォルト ref として
+          # ブランチ名 (al2023-<version>) をそのまま解決しにいくため。
+          git checkout -B "$ref" "$commit"
+          [ "$(git rev-parse HEAD)" = "$commit" ] || {
+            echo "error: HEAD ($(git rev-parse HEAD)) != expected commit ($commit)" >&2
+            exit 1
+          }
 
       - name: Generate source tarball
         working-directory: nagios-rpm
