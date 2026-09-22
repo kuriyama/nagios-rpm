@@ -1,0 +1,166 @@
+diff -up ./cgi/extinfo.c.remove_3rdparty_links ./cgi/extinfo.c
+--- ./cgi/extinfo.c.remove_3rdparty_links	2019-08-20 15:29:34.000000000 +0000
++++ ./cgi/extinfo.c	2019-08-29 18:17:32.321544245 +0000
+@@ -557,27 +557,6 @@ void document_header(int use_stylesheet)
+ 		printf("<LINK REL='stylesheet' TYPE='text/css' HREF='%s%s'>\n", url_stylesheets_path, NAGFUNCS_CSS);
+ 		}
+ 
+-	if (display_type == DISPLAY_HOST_INFO)
+-		vidurl = "https://www.youtube.com/embed/n3QEAf-MxY4";
+-	else if(display_type == DISPLAY_SERVICE_INFO)
+-		vidurl = "https://www.youtube.com/embed/f_knwQOS6FI";
+-
+-	if (enable_page_tour == TRUE && vidurl) {
+-		printf("<script type='text/javascript' src='%s%s'></script>\n", url_js_path, JQUERY_JS);
+-		printf("<script type='text/javascript' src='%s%s'></script>\n", url_js_path, NAGFUNCS_JS);
+-		printf("<script type='text/javascript'>\n");
+-		printf("var vbox, vBoxId='extinfo%d', vboxText = "
+-				"'<a href=https://www.nagios.com/tours target=_blank>"
+-				"Click here to watch the entire Nagios Core 4 Tour!</a>';\n",
+-				display_type);
+-		printf("$(document).ready(function() {\n"
+-				"var user = '%s';\nvBoxId += ';' + user;\n",
+-				current_authdata.username);
+-		printf("vbox = new vidbox({pos:'lr',vidurl:'%s',text:vboxText,"
+-				"vidid:vBoxId});\n", vidurl);
+-		printf("});\n</script>\n");
+-		}
+-
+ 	printf("</head>\n");
+ 
+ 	printf("<body CLASS='extinfo'>\n");
+diff -up ./cgi/status.c.remove_3rdparty_links ./cgi/status.c
+--- ./cgi/status.c.remove_3rdparty_links	2019-08-20 15:29:34.000000000 +0000
++++ ./cgi/status.c	2019-08-29 18:17:32.322544264 +0000
+@@ -555,31 +555,8 @@ void document_header(int use_stylesheet)
+ 	/* JS function to append content to elements on page */
+ 	printf("<script type='text/javascript'>\n");
+ 	if (enable_page_tour == TRUE) {
+-		printf("var vbox, vBoxId='status%d%d', vboxText = "
+-				"'<a href=https://www.nagios.com/tours target=_blank>"
+-				"Click here to watch the entire Nagios Core 4 Tour!</a>';\n",
+-				display_type, group_style_type);
+ 		printf("$(document).ready(function() {\n"
+ 				"$('#top_page_numbers').append($('#bottom_page_numbers').html() );\n");
+-		if (display_type == DISPLAY_HOSTS)
+-			vidurl = "https://www.youtube.com/embed/ahDIJcbSEFM";
+-		else if(display_type == DISPLAY_SERVICEGROUPS) {
+-			if (group_style_type == STYLE_HOST_DETAIL)
+-				vidurl = "https://www.youtube.com/embed/nNiRr0hDZag";
+-			else if (group_style_type == STYLE_OVERVIEW)
+-				vidurl = "https://www.youtube.com/embed/MyvgTKLyQhA";
+-		} else {
+-			if (group_style_type == STYLE_OVERVIEW)
+-				vidurl = "https://www.youtube.com/embed/jUDrjgEDb2A";
+-			else if (group_style_type == STYLE_HOST_DETAIL)
+-				vidurl = "https://www.youtube.com/embed/nNiRr0hDZag";
+-		}
+-		if (vidurl) {
+-			printf("var user = '%s';\nvBoxId += ';' + user;",
+-				 current_authdata.username);
+-			printf("vbox = new vidbox({pos:'lr',vidurl:'%s',text:vboxText,"
+-					"vidid:vBoxId});\n", vidurl);
+-		}
+ 		printf("});\n");
+ 		}
+ 	printf("function set_limit(url) { \nthis.location = url+'&limit='+$('#limit').val();\n  }\n");
+diff -up ./cgi/tac.c.remove_3rdparty_links ./cgi/tac.c
+--- ./cgi/tac.c.remove_3rdparty_links	2019-08-20 15:29:34.000000000 +0000
++++ ./cgi/tac.c	2019-08-29 18:17:32.323544284 +0000
+@@ -308,17 +308,7 @@ void document_header(int use_stylesheet)
+ 
+ 	if (enable_page_tour == TRUE) {
+ 		printf("<script type='text/javascript' src='%s%s'></script>\n", url_js_path, NAGFUNCS_JS);
+-
+-		printf("<script type='text/javascript'>\nvar vbox, vBoxId='tac', "
+-				"vboxText = '<a href=https://www.nagios.com/tours target=_blank>"
+-				"Click here to watch the entire Nagios Core 4 Tour!</a>';\n");
+-		printf("$(document).ready(function() {\n"
+-				"var user = '%s';\nvBoxId += ';' + user;", current_authdata.username);
+-		printf("vbox = new vidbox({pos:'lr',"
+-				"vidurl:'https://www.youtube.com/embed/l20YRDhbOfA',text:vboxText,"
+-				"vidid:vBoxId});");
+-		printf("\n});\n</script>\n");
+-		}
++	}
+ 
+ 
+ 
+diff -up ./html/main.php.remove_3rdparty_links ./html/main.php
+--- ./html/main.php.remove_3rdparty_links	2019-08-20 15:29:34.000000000 +0000
++++ ./html/main.php	2019-08-29 18:20:16.216716704 +0000
+@@ -19,20 +19,7 @@ $this_year = '2019';
+ 
+ <script type='text/javascript'>
+ 	var cookie;
+-	<?php if ($cfg["enable_page_tour"]) { ?>
+-		var vbox;
+-		var vBoxId = "main";
+-		var vboxText = "<a href=https://www.nagios.com/tours target=_blank> " +
+-						"Click here to watch the entire Nagios Core 4 Tour!</a>";
+-	<?php } ?>
+ 	$(document).ready(function() {
+-		var user = "<?php echo htmlspecialchars($_SERVER['REMOTE_USER']); ?>";
+-
+-		<?php if ($cfg["enable_page_tour"]) { ?>
+-			vBoxId += ";" + user;
+-			vbox = new vidbox({pos:'lr',vidurl:'https://www.youtube.com/embed/2hVBAet-XpY',
+-								text:vboxText,vidid:vBoxId});
+-		<?php } ?>
+ 		loadRemoteFeed( // Our top banner splash.
+ 			'#splashbox0-contents', 'corebanner', 1,
+ 			'', processBannerItem, ''
+@@ -59,7 +46,6 @@ $this_year = '2019';
+ 			crossDomain: true,
+ 			success: function(d, status, jqXHR) {
+ 				// We should have Internet access, set the playlist HTML.
+-				initializePlaylist();
+ 
+ 				var text = ''; // Start with empty text by default.
+ 
+@@ -94,19 +80,6 @@ $this_year = '2019';
+ 			: '';
+ 	}
+ 
+-
+-	// Set our playlist HTML when we know we have Internet access.
+-	var playlistInitialized = false;
+-	function initializePlaylist() {
+-		if (!playlistInitialized) {
+-			playlistInitialized = true;
+-			$('#splashbox3')
+-				.addClass('splashbox3-full')
+-				.removeClass('splashbox3-empty')
+-				.html('<iframe width="100%" height="100%" src="//www.youtube.com/embed/videoseries?list=PLN-ryIrpC_mCUW1DFwZpxpAk00i60lSkE&iv_load_policy=3&rel=0" frameborder="0" allowfullscreen></iframe>');
+-		}
+-	}
+-
+ 	// Get the daemon status JSON.
+ 	function getCoreStatus() {
+ 		setCoreStatusHTML('passiveonly', 'Checking process status...');
+diff -up ./html/map.php.remove_3rdparty_links ./html/map.php
+--- ./html/map.php.remove_3rdparty_links	2019-08-29 18:17:32.324544303 +0000
++++ ./html/map.php	2019-08-29 18:20:48.488341376 +0000
+@@ -71,22 +71,6 @@
+ 		<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+ 		<script type="text/javascript" src="js/nag_funcs.js"></script>
+ 
+-		<?php if ($cfg["enable_page_tour"]) { ?>
+-			<script type='text/javascript'>
+-				var vbox;
+-				var vBoxId = "map";
+-				var vboxText = "<a href=https://www.nagios.com/tours target=_blank>" +
+-							"Click here to watch the entire Nagios Core 4 Tour!</a>";
+-				$(document).ready(function() {
+-					var user = "<?php echo htmlspecialchars($_SERVER['REMOTE_USER']); ?>";
+-
+-					vBoxId += ";" + user;
+-					vbox = new vidbox({pos:'lr',vidurl:'https://www.youtube.com/embed/leaRdb3BElI',
+-										text:vboxText,vidid:vBoxId});
+-				});
+-			</script>
+-		<?php } ?>
+-
+ 	</head>
+ 	<body ng-controller="mapCtrl" <?php echo $img; ?>>
+ 		<div id="image-cache" style="display: none;"></div>

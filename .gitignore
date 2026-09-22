@@ -1,0 +1,21 @@
+# Claude Code のセッション状態(このプロジェクトの成果物ではない)
+/.claude/
+
+# nagioscore は別リポジトリ (kuriyama/nagioscore) のワーキングコピー。
+# gitlink として埋め込まれるのを避けるため、この外側のリポジトリでは無視する。
+/nagioscore/
+
+# scripts/generate-source-tarball.sh で生成される大きい tarball。
+# 中身は nagioscore/ の git 履歴そのものなので二重管理しない。
+# 期待するハッシュは sources ファイルで固定する。
+/nagioscore-nagios-*.tar.gz
+/nagioscore-nagios-*.tar
+
+# rpmbuild をこのディレクトリ直下 (_topdir) で回した場合の生成物
+/BUILD/
+/BUILDROOT/
+/RPMS/
+/SRPMS/
+
+# rpmbuild --define や sed -i.bak が残すバックアップ
+*.bak

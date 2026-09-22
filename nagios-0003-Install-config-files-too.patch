@@ -1,0 +1,13 @@
+diff --git a/Makefile.in b/Makefile.in
+index b992ab1e..ef2a797f 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -439,7 +439,7 @@ dox:
+ 	doxygen doxy.conf
+ 
+ 
+-fullinstall: install install-init install-commandmode install-webconf install-devel
++fullinstall: install install-init install-commandmode install-webconf install-devel install-config
+ 
+ # Uninstall is too destructive if base install directory is /usr, etc.
+ #uninstall:
