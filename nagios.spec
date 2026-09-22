@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama9
+Release:        3%{?dist}.kuriyama10
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,13 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama10
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama10)
+- Remove module/ and worker/ sample code (event-broker demo and
+  external-worker demo; compiled but never installed by fullinstall)
+  and Solaris/SVR4 packaging cruft (mkpackage, pkginfo.in,
+  nagios.sysconfig), none of which this spec ever referenced
+
 * Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama9
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama9)
 - Remove dead WAP/WML output branches from cmd.cgi (unreachable since
