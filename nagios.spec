@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama16
+Release:        3%{?dist}.kuriyama17
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,13 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama17
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama17)
+- Add opt-in browser memory/perf debug instrumentation to the webui
+  SPA (window.__nagiosDebug(), ?debug=1). No effect on normal use;
+  investigation found no memory leak at up to 5000 synthetic hosts,
+  this is a cheap way to get a real trend line from production
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama16
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama16)
 - Add t-tap regression tests for cmd.cgi's command-pipe injection
