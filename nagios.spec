@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama10
+Release:        3%{?dist}.kuriyama11
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,17 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama11
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama11)
+- Fix a locale-dependent heap-buffer-overflow in the JSON CGIs' string
+  escaping (statusjson.cgi/objectjson.cgi/archivejson.cgi). The old
+  mbstowcs()/wcstombs()-based implementation could be driven into an
+  OOB write by invalid multibyte input under a non-UTF-8 locale, and
+  the process locale is itself set per-request from the client's
+  Accept-Language header -- confirmed exploitable via a standalone
+  ASan repro. Rewritten to a locale-independent byte-level escaper
+  (cgi/json_escape.c), with a new t-tap regression test suite
+
 * Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama10
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama10)
 - Remove module/ and worker/ sample code (event-broker demo and
