@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama3
+Release:        3%{?dist}.kuriyama4
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,11 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama4
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama4)
+- Add an in-SPA all-hosts detail view (status.cgi Phase A), reusing
+  html/stylesheets/status.css and the existing status icon set
+
 * Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama3
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama3)
 - Replace the index.html/side.html/main.html frameset with a TypeScript
