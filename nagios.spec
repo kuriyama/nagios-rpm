@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama7
+Release:        3%{?dist}.kuriyama8
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,12 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama8
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama8)
+- Add Acknowledge/Schedule Downtime quick actions to the hosts/services
+  detail views (status.cgi Phase C-3, cmd.cgi integration). First
+  write-capable change in the SPA -- test carefully before relying on it
+
 * Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama7
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama7)
 - Add an in-SPA all-services detail view with sort/refresh/servicegroup
