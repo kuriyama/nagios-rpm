@@ -1,0 +1,98 @@
+name: Build and release SRPM
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:40
+
+    steps:
+      - name: Install prerequisites
+        run: dnf install -y git rpm-build rpmdevtools dnf-plugins-core gzip
+
+      - name: Checkout nagios-rpm
+        uses: actions/checkout@v4
+        with:
+          path: nagios-rpm
+
+      - name: Checkout nagioscore
+        uses: actions/checkout@v4
+        with:
+          repository: kuriyama/nagioscore
+          path: nagios-rpm/nagioscore
+
+      - name: Pin nagioscore to the ref/commit recorded in sources
+        working-directory: nagios-rpm/nagioscore
+        run: |
+          set -e
+          # "# source: .../nagioscore @ <ref> (<40-hex commit>)" という行から
+          # ref名とコミットの両方を読む。sources 生成時点で ref の指す先が
+          # そのコミットだったはずなので、その ref を shallow fetch すれば
+          # 対象コミットは含まれる(al2023-4.4.14 のようにデフォルトブランチ
+          # ではない branch を安全に取得するため)。
+          line=$(grep '^# source:' ../sources)
+          ref=$(printf '%s\n' "$line" | sed -E 's/.*@ ([^ ]+) \(.*/\1/')
+          commit=$(printf '%s\n' "$line" | grep -oE '\(([0-9a-f]{40})\)' | tr -d '()')
+          echo "Fetching $ref (expecting commit $commit)"
+          git remote set-branches origin '*'
+          git fetch --depth 1 origin "$ref"
+          git checkout "$commit"
+
+      - name: Generate source tarball
+        working-directory: nagios-rpm
+        run: |
+          set -e
+          ./scripts/generate-source-tarball.sh
+          # sources のハッシュがローカルでコミットされたものと一致することを確認する
+          # (nagioscore 側の ref がずれていたり sources を手で書き換えていないかの検証)
+          git diff --exit-code sources
+
+      - name: Build SRPM
+        working-directory: nagios-rpm
+        run: |
+          set -e
+          mkdir -p out
+          rpmbuild -bs nagios.spec \
+            --define "_sourcedir $PWD" \
+            --define "_specdir $PWD" \
+            --define "_srcrpmdir $PWD/out" \
+            --define "_vendor amazon" \
+            --define "dist .amzn2023"
+
+      - name: Install build dependencies
+        working-directory: nagios-rpm
+        run: dnf builddep -y out/*.src.rpm
+
+      - name: Full build (validation)
+        working-directory: nagios-rpm
+        run: |
+          set -e
+          mkdir -p out
+          rpmbuild --rebuild out/*.src.rpm \
+            --define "_rpmdir $PWD/out" \
+            --define "_vendor amazon" \
+            --define "dist .amzn2023"
+
+      - name: Determine version-release
+        id: relver
+        working-directory: nagios-rpm
+        run: |
+          set -e
+          v=$(rpm -q --qf '%{version}-%{release}\n' -p out/*.src.rpm)
+          echo "tag=$v" >> "$GITHUB_OUTPUT"
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.relver.outputs.tag }}
+          files: |
+            nagios-rpm/out/*.src.rpm
+            nagios-rpm/out/*/*.rpm
