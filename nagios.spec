@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama15
+Release:        3%{?dist}.kuriyama16
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,13 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama16
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama16)
+- Add t-tap regression tests for cmd.cgi's command-pipe injection
+  defenses (write_command_to_file()'s newline guard,
+  clean_comment_data()'s ';' stripping), turning a prior manual
+  security-review trace into a permanent automated check
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama15
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama15)
 - Fix bugs found by a cppcheck static-analysis follow-up to the
