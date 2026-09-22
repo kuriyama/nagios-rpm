@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama4
+Release:        3%{?dist}.kuriyama5
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,11 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama5
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama5)
+- Add sort (click column header) and 90s auto-refresh to the all-hosts
+  detail view added in kuriyama4
+
 * Tue Sep 22 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama4
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama4)
 - Add an in-SPA all-hosts detail view (status.cgi Phase A), reusing
