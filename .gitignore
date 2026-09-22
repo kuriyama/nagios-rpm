@@ -5,6 +5,10 @@
 # gitlink として埋め込まれるのを避けるため、この外側のリポジトリでは無視する。
 /nagioscore/
 
+# nagioscore の git worktree (git worktree add で作った試験実装用の
+# 作業ツリー)。理由は上記と同じ。
+/nagioscore-wt-*/
+
 # scripts/generate-source-tarball.sh で生成される大きい tarball。
 # 中身は nagioscore/ の git 履歴そのものなので二重管理しない。
 # 期待するハッシュは sources ファイルで固定する。
