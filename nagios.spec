@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama28
+Release:        3%{?dist}.kuriyama29
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,22 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Thu Sep 24 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama29
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama29)
+- Fix an O(hosts * services) algorithmic bug in objectjson.cgi/
+  statusjson.cgi's query=servicelist (both used by the webui SPA, and
+  by upstream's own trends-form.js/histogram-form.js service dropdown):
+  it rescanned the entire global service list per host instead of
+  using each host's own service list, which dominates on a large
+  deployment. Now O(hosts + services), with each host's service
+  enumeration order restored to match the original (unpatched)
+  behavior exactly, since upstream's own service dropdown depends on
+  it. Verified in a fedora:40 container: byte-identical output at
+  every scale tested, ~2.3x-3.6x faster depending on scale, full t-tap
+  suite passing. Part of addressing a real-install report of the
+  Services page taking 5-10s to load on a large deployment (see also
+  kuriyama28).
+
 * Thu Sep 24 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama28
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama28)
 - Stop refetching objectjson.cgi's per-host/service notes_url/
