@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama25
+Release:        3%{?dist}.kuriyama27
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,23 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama27
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama27)
+- Force host/service status/logo icons to the traditional 20x20 size
+  (include/cgiutils.h's STATUS_ICON_WIDTH/HEIGHT) instead of each
+  image's native resolution. Reported from a real install as an OS
+  logo icon rendering at 40x40.
+
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama26
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama26)
+- IMPORTANT: fix every timestamp in the SPA (Last Check/Last
+  updated/Duration and others) rendering ~56000 years in the future.
+  cgi/jsonutils.c's json_time_t() renders every time_t field in
+  milliseconds by default (a "000" suffix appended to the raw
+  epoch-seconds value) unless dateformat= is requested; the SPA's
+  formatting code assumed seconds throughout. Reported from a real
+  install as dates like "58409-05-09" and "58697-11-24".
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama25
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama25)
 - Port extinfo.cgi's Scheduling Queue (type=7) onto the SPA: merged
