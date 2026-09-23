@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama21
+Release:        3%{?dist}.kuriyama22
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,13 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama22
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama22)
+- Port extinfo.cgi's Comments (type=3) and Downtime (type=6) views
+  onto the SPA, including a Delete quick action for each row, backed
+  entirely by the existing statusjson.cgi commentlist/downtimelist
+  queries (no new server-side code)
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama21
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama21)
 - Add an "Unhandled Problems" filter to the SPA's hosts/services
