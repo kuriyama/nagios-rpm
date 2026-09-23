@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama24
+Release:        3%{?dist}.kuriyama25
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,14 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama25
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama25)
+- Port extinfo.cgi's Scheduling Queue (type=7) onto the SPA: merged
+  host+service view sorted by next check time, reusing hostlist/
+  servicelist details=true data already fetched by hosts.ts/
+  services.ts (no new API calls). Nav's "Scheduling Queue" link now
+  goes to #schedulingqueue instead of the legacy CGI page.
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama24
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama24)
 - IMPORTANT: fix the SPA's hosts/services status column showing
