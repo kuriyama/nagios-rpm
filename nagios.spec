@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama20
+Release:        3%{?dist}.kuriyama21
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,14 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama21
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama21)
+- Add an "Unhandled Problems" filter to the SPA's hosts/services
+  views, and point the "Services"/"Services (Unhandled)"/"Hosts"/
+  "Hosts (Unhandled)" nav links at them instead of legacy status.cgi
+  URLs (same underlying view, status.cgi just applied extra filter
+  parameters the SPA didn't reproduce yet)
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama20
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama20)
 - Fix the SPA shell's #nav/#dashboard divs rendering stacked instead
