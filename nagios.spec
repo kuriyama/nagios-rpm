@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama19
+Release:        3%{?dist}.kuriyama20
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,13 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama20
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama20)
+- Fix the SPA shell's #nav/#dashboard divs rendering stacked instead
+  of side-by-side (the old frameset's 180px-sidebar layout was never
+  replaced with real CSS when the frameset was removed). Reported
+  from a real install running kuriyama19
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama19
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama19)
 - Add t-tap regression tests for cgiauth.c's object-graph-dependent
