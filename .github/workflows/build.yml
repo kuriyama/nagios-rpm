@@ -34,20 +34,30 @@ jobs:
         run: |
           set -e
           # "# source: .../nagioscore @ <ref> (<40-hex commit>)" という行から
-          # ref名とコミットの両方を読む。sources 生成時点で ref の指す先が
-          # そのコミットだったはずなので、その ref を shallow fetch すれば
-          # 対象コミットは含まれる(al2023-4.4.14 のようにデフォルトブランチ
-          # ではない branch を安全に取得するため)。
+          # ref名とコミットの両方を読む。
+          #
+          # コミットではなく ref 名の方を shallow fetch すると、sources
+          # 生成後に nagioscore 側へさらに commit が push されて ref の
+          # 指す先が進んでしまっていた場合、shallow fetch は新しい方の
+          # tip しか取得せず、sources が指す一つ前のコミットの tree が
+          # ローカルに存在しない状態になり "unable to read tree" で失敗
+          # する(このリポジトリと nagioscore 側の push タイミングが
+          # ずれると起き得る、実際に発生した障害)。
+          #
+          # そのため ref ではなくコミットハッシュそのものを直接 fetch
+          # する。GitHub は到達可能な任意の SHA1 を want として受け付ける
+          # ため、ref がどれだけ進んでいても対象コミットだけを確実に
+          # 取得できる。
           line=$(grep '^# source:' ../sources)
           ref=$(printf '%s\n' "$line" | sed -E 's/.*@ ([^ ]+) \(.*/\1/')
           commit=$(printf '%s\n' "$line" | grep -oE '\(([0-9a-f]{40})\)' | tr -d '()')
-          echo "Fetching $ref (expecting commit $commit)"
+          echo "Fetching commit $commit (recorded ref: $ref)"
           git remote set-branches origin '*'
-          git fetch --depth 1 origin "$ref"
+          git fetch --depth 1 origin "$commit"
           # detached HEAD ではなく "$ref" という名前のローカルブランチを
           # 作る。generate-source-tarball.sh はデフォルト ref として
           # ブランチ名 (al2023-<version>) をそのまま解決しにいくため。
-          git checkout -B "$ref" "$commit"
+          git checkout -B "$ref" FETCH_HEAD
           [ "$(git rev-parse HEAD)" = "$commit" ] || {
             echo "error: HEAD ($(git rev-parse HEAD)) != expected commit ($commit)" >&2
             exit 1
