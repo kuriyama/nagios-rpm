@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama27
+Release:        3%{?dist}.kuriyama28
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,18 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Thu Sep 24 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama28
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama28)
+- Stop refetching objectjson.cgi's per-host/service notes_url/
+  action_url/icon_image and group membership on every 90s SPA
+  auto-refresh; that data only changes on a config reload, unlike
+  status. Fetched once per page visit now. Part of addressing a
+  real-install report of the Services page taking 5-10s to load on a
+  large deployment. (A second, larger fix -- a genuine O(hosts *
+  services) algorithmic bug in objectjson.cgi/statusjson.cgi's own
+  servicelist query -- is on the perf/servicelist-quadratic-scan
+  branch pending review before it's released.)
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama27
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama27)
 - Force host/service status/logo icons to the traditional 20x20 size
