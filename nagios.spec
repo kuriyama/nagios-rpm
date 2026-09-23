@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama23
+Release:        3%{?dist}.kuriyama24
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,18 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama24
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama24)
+- IMPORTANT: fix the SPA's hosts/services status column showing
+  completely blank (and the "Unhandled Problems" filter never
+  matching) against a real Nagios server. fetchHostStatusDetails()/
+  fetchServiceStatusDetails() were missing formatoptions=enumerate,
+  so statusjson.cgi returned the raw numeric status instead of the
+  "up"/"down"/etc string the SPA's rendering/filtering logic expects.
+  Present since these views were first built; never caught earlier
+  because this sandbox's own mock-server testing always hardcoded
+  the already-correct string values
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama23
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama23)
 - Port extinfo.cgi's Process Info (type=0, read-only) and
