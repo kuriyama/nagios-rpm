@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama18
+Release:        3%{?dist}.kuriyama19
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,19 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama19
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama19)
+- Add t-tap regression tests for cgiauth.c's object-graph-dependent
+  authorization functions (is_authorized_for_host/service/hostgroup/
+  servicegroup and their _commands() siblings), built against a real
+  object graph rather than stubs
+- Fix 2 real NULL-dereference bugs found by tracing the full
+  cppcheck nullPointerRedundantCheck cluster (25 hits) that an
+  earlier pass had only spot-checked: an inverted NULL check in
+  archivejson.c's availability computation, and two sites in
+  status.cgi's grid view that computed a NULL-safe display class
+  but then dereferenced the NULL pointer anyway
+
 * Wed Sep 23 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama18
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama18)
 - Port trends.html off the vendored AngularJS 1.3.9 + D3 + Bootstrap
