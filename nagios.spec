@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama31
+Release:        3%{?dist}.kuriyama32
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,16 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Thu Sep 24 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama32
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama32)
+- Quiet html/Makefile.in's vendored-JS unzip steps (angular-1.3.9.zip,
+  ui-utils-0.2.3.zip, bootstrap-3.3.7-dist.zip, d3-3.5.17.zip):
+  `unzip -u` -> `unzip -uq`. These extract in full on every from-
+  scratch build (no timestamp skip at the make-target level) and log
+  700+ "inflating:"/"creating:" lines for files that mostly aren't
+  even installed. Reported as flooding CI build logs. This is an
+  upstream build-system issue, not fork-specific.
+
 * Thu Sep 24 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama31
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama31)
 - Add the Host/Service Status Totals summary panel (Up/Down/
