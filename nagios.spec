@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama30
+Release:        3%{?dist}.kuriyama31
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,16 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Thu Sep 24 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama31
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama31)
+- Add the Host/Service Status Totals summary panel (Up/Down/
+  Unreachable/Pending or Ok/Warning/Unknown/Critical/Pending + All
+  Problems/All Types) above the hosts/services SPA tables, matching
+  cgi/status.c's show_host_status_totals()/show_service_status_totals().
+  Each page shows only its own totals type and reuses the group filter
+  already on that page; individual counts are display-only (not
+  clickable links, unlike legacy).
+
 * Thu Sep 24 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama30
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama30)
 - Match legacy status.cgi's row density and per-row status coloring on
