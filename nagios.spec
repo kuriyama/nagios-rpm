@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama29
+Release:        3%{?dist}.kuriyama30
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,16 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Thu Sep 24 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama30
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama30)
+- Match legacy status.cgi's row density and per-row status coloring on
+  the SPA's hosts/services views: the host/service name cell now gets
+  the same vivid statusHOST*/status{OK,WARNING,...} coloring legacy
+  uses there (was left white before), and name+icons now share one
+  line (name left, icons right) instead of each stacking as its own
+  line, cutting row height from 3 lines to 2. Found by comparing
+  real-install screenshots of legacy vs. this SPA side by side.
+
 * Thu Sep 24 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama29
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama29)
 - Fix an O(hosts * services) algorithmic bug in objectjson.cgi/
