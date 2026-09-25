@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama33
+Release:        3%{?dist}.kuriyama34
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,17 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Fri Sep 25 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama34
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama34)
+- kuriyama33's white-space: nowrap on the hosts/services name+icons+
+  actions row prevented that column from ever wrapping, which let it
+  grow unbounded for a long service description -- squeezing the Host
+  column (in services.ts) narrow enough that even short, ordinary
+  hostnames started wrapping. Removed nowrap; the flex row still keeps
+  name/icons/actions together on one line for the common case, and
+  only genuine outliers (very long names/descriptions) wrap now,
+  instead of one outlier distorting the whole table's column widths.
+
 * Fri Sep 25 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama33
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama33)
 - IMPORTANT: kuriyama30's row-density fix only got hosts/services rows
