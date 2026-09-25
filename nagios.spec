@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama32
+Release:        3%{?dist}.kuriyama33
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,19 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Fri Sep 25 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama33
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama33)
+- IMPORTANT: kuriyama30's row-density fix only got hosts/services rows
+  from 3 lines to 2 -- still half of legacy's 1-line-per-row density,
+  reported from a real install. Replaced the flex-wrap layout with a
+  single non-wrapping row (name+icons+Ack/Downtime together), letting
+  the table column grow to fit instead of reflowing, matching legacy's
+  table auto-layout behavior exactly.
+- Fix "Status Information" rendering center-aligned instead of
+  legacy's left-aligned: #dashboard never got the text-align: left
+  override that #nav already had for the same #splashpage
+  text-align: center cascade (common.css).
+
 * Thu Sep 24 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama32
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama32)
 - Quiet html/Makefile.in's vendored-JS unzip steps (angular-1.3.9.zip,
