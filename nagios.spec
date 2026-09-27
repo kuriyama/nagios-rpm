@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama34
+Release:        3%{?dist}.kuriyama35
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,18 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Sun Sep 27 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama35
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama35)
+- Three fixes reported from a real install of kuriyama34: (1) removed
+  a 10pt/2px-4px cell font/padding rule that was measurably looser
+  than legacy's actual 8pt/near-zero-padding table, (2) restored the
+  hosts/services name-left icons-right alignment lost when kuriyama33
+  fixed the wrapping bug, (3) hid the Ack/Downtime quick-action links
+  for now (SHOW_QUICK_ACTIONS = false; code kept, not deleted) as too
+  large a layout difference from legacy in their current form -- the
+  underlying feature is still wanted, just needs a lower-impact
+  presentation before it comes back.
+
 * Fri Sep 25 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama34
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama34)
 - kuriyama33's white-space: nowrap on the hosts/services name+icons+
