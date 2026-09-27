@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama37
+Release:        3%{?dist}.kuriyama38
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,22 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Sun Sep 27 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama38
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama38)
+- Fixed a real misreading of cgi/status.c: the Services view's Host/
+  Service name cells (and hosts.ts's own Host column, which was
+  already correct) were being colored with the vivid statusOK/
+  statusHOSTUP palette; upstream's show_service_detail() only uses
+  that on the Status column itself, giving the Service/collapsed-Host
+  name cells plain zebra shading unless the row is a problem (pale
+  color) or the host itself is down/unreachable (vivid). Also set
+  table.status's cell padding to the exact 0/2px upstream renders at
+  (confirmed by inspecting a real page) instead of the browser's own
+  default, and gave table.status width:100% (matching upstream's own
+  width='100%' attribute) so column boundaries stay put when switching
+  the Problems/Unhandled Problems filter instead of the whole table
+  visibly resizing.
+
 * Sun Sep 27 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama37
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama37)
 - Restored the left nav's compact "Services (Unhandled)"/
