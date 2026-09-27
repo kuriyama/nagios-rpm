@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama36
+Release:        3%{?dist}.kuriyama37
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,19 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Sun Sep 27 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama37
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama37)
+- Restored the left nav's compact "Services (Unhandled)"/
+  "Hosts (Unhandled)" one-line labels (had been split into two
+  separate list items; matches html/side.html.in's original layout).
+- Added white-space: nowrap to the Last Check/Duration columns on
+  hosts/services, matching cgi/status.c's explicit `nowrap` on exactly
+  those two cells.
+- Added real cache-busting for nagios-app.css/nagios-app.js (a
+  "?kuriyamaN" query string, bumped by hand each release from now on)
+  since a stale cached copy of either was the likely explanation for
+  a report that kuriyama35's fixes weren't visible on one page.
+
 * Sun Sep 27 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama36
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama36)
 - Collapse the Services view's Host column onto consecutive rows that
