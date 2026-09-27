@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama35
+Release:        3%{?dist}.kuriyama36
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,17 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Sun Sep 27 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama36
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama36)
+- Collapse the Services view's Host column onto consecutive rows that
+  share the same host (matching cgi/status.c's show_service_detail(),
+  which does this via a plain adjacency check in whatever sort order
+  is active, not rowspan), with a blank spacer between groups. Makes
+  a host with several services much easier to scan, as reported from
+  a real install. The collapsed cell shows the host's own status
+  color/icons (notes/action/logo included -- fetched once on initial
+  load, cached across refreshes like the other objectjson.cgi calls).
+
 * Sun Sep 27 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama35
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama35)
 - Three fixes reported from a real install of kuriyama34: (1) removed
