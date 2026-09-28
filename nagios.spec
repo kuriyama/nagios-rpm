@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama38
+Release:        3%{?dist}.kuriyama39
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,27 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Mon Sep 28 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama39
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama39)
+- IMPORTANT: fix an O(n^2) hoststatus/servicestatus hash table on
+  large installs, shared code used by both the CGIs and the core
+  daemon. hashfunc() (common/shared.c) summed character values --
+  order-independent and with almost no spread for same-length,
+  shared-prefix names like sequential hostnames -- so on a large
+  install nearly every object hashed into a handful of buckets no
+  matter the table size. Replaced with djb2; also bumped
+  HOSTSTATUS_HASHSLOTS/SERVICESTATUS_HASHSLOTS 64x (1024 -> 65536,
+  ~1MB extra memory). Root cause of a real-install report of
+  statusjson.cgi?query=servicelist&details=true taking ~7s for a
+  ~5MB response: profiled with gprof, confirmed by direct timing
+  (100,000-host request: 46s -> 5.3s; 50,000-host: ~10s -> ~3s --
+  the widening gap with scale is the signature of an O(n^2)
+  algorithm fixed to O(n)). Also fixed json_object's member array
+  growing by one realloc per append instead of doubling (a related
+  but, per profiling, non-dominant inefficiency in the same code
+  path). Verified byte-identical JSON output at every scale tested,
+  full t-tap suite passing.
+
 * Sun Sep 27 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama38
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama38)
 - Fixed a real misreading of cgi/status.c: the Services view's Host/
