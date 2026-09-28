@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama39
+Release:        3%{?dist}.kuriyama40
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,23 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Mon Sep 28 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama40
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama40)
+- Add hostprops=/serviceprops= filters to statusjson.cgi's hostlist/
+  servicelist (ported from cgi/status.c's passes_host_properties_filter()/
+  passes_service_properties_filter()), so the webui's Problems/Unhandled
+  Problems views can narrow the request server-side instead of always
+  fetching every host/service and filtering client-side. On a large
+  install this turned a several-MB fetch into a few hundred bytes when
+  few problems match.
+- Fix json_status_service_passes_host_selection() to actually check
+  host_statuses against the host's status; it accepted the parameter but
+  never used it, so hoststatus= had no effect on query=servicelist.
+- webui: wire hosts.ts/services.ts to the new server-side filters, and
+  switch the Host/Service Status Totals panel to statusjson.cgi's
+  hostcount/servicecount queries so it keeps showing the true breakdown
+  across all hosts/services regardless of the table's own filter.
+
 * Mon Sep 28 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama39
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama39)
 - IMPORTANT: fix an O(n^2) hoststatus/servicestatus hash table on
