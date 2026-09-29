@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama40
+Release:        3%{?dist}.kuriyama41
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,24 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Sep 29 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama41
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama41)
+- Add fields= filter to objectjson.cgi's hostlist/servicelist detail
+  output (host_name/description/etc.) so a caller can restrict a record
+  to only the fields it actually reads instead of always getting every
+  field the object model has (~50 for a host, ~80 for a service). Each
+  field is skipped at construction time, not just omitted afterward, so
+  both server-side CPU and response size shrink together -- measured on
+  a 200,000-service dataset at roughly half the CPU time and ~1/14th the
+  bytes when restricted to the three fields the webui actually uses.
+- Bound the cost of parsing fields= itself against a hostile or
+  oversized value (capped-length, capped-token-count one-time parse
+  instead of re-scanning the raw string on every field check for every
+  record), so a very long or pathologically-shaped fields= value can't
+  make a request's own processing scale with input size.
+- webui: request only the fields it reads (notes_url/action_url/
+  icon_image, plus address for hosts) from objectjson.cgi.
+
 * Mon Sep 28 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama40
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama40)
 - Add hostprops=/serviceprops= filters to statusjson.cgi's hostlist/
