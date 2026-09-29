@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama41
+Release:        3%{?dist}.kuriyama42
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,25 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Sep 29 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama42
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama42)
+- webui fixes found while testing kuriyama41/42 on a real install:
+  - Restore upstream's total 6px left/right cell padding on the Hosts/
+    Services detail tables (upstream's own table nests a second table
+    inside each td, so its visible padding is actually 4px + 2px; this
+    SPA's table has no such nesting, so 6px is now set directly).
+  - Fix a few extra pixels of height on the row of status/logo icons
+    next to each host/service name, caused by <img>'s default inline
+    vertical-align:baseline leaving descender space below it.
+  - Default the Hosts/Services tables to sorting by Host name instead
+    of Status. cgi/status.c actually defaults to no sort at all
+    (sort_type=SORT_NONE), which visually groups each host's rows
+    together since they're registered consecutively -- none of its own
+    generated links, including the ones Problems > Hosts/Services
+    mirror, ever override that default. Sorting by host name ascending
+    is the closest equivalent this SPA has, and keeps a host's service
+    rows together for the collapsed Host cell to group.
+
 * Tue Sep 29 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama41
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama41)
 - Add fields= filter to objectjson.cgi's hostlist/servicelist detail
