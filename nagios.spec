@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama42
+Release:        3%{?dist}.kuriyama43
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,36 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Tue Oct 06 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama43
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama43)
+- webui: show both Host and Service Status Totals side by side on the
+  Hosts and Services views, as upstream's status.cgi does, and stop
+  refetching them on every sort-column click.
+- statusjson.cgi: add fields= to host/hostlist/service/servicelist
+  detail output (same mechanism as objectjson.cgi's, now shared via
+  jsonutils), and totals=true on hostlist/servicelist to return the
+  hostcount/servicecount results for the same hostgroup/servicegroup in
+  the same response. Every CGI request re-reads objects.cache and
+  status.dat from scratch, so the webui now asks for only the fields it
+  reads and gets the totals panels from the list request itself: one
+  statusjson.cgi request per Hosts refresh (was three), two per
+  Services refresh (was three). Host/Service Group filtering moved
+  server-side to make that possible.
+- statusjson/objectjson/archivejson.cgi: honor formatoptions=whitespace
+  instead of always pretty-printing (30-50% smaller responses; output
+  with whitespace requested is byte-identical to before).
+- CGIs: parse status.dat with one hash lookup per line instead of a
+  chain of up to ~45 strcmp()s (~0.9s less per request at 15,000 hosts/
+  195,000 services, on every CGI).
+- Fix three O(n^2) paths with large host/service groups: member
+  expansion duplicate checks (also speeds up the daemon's config load),
+  sorted per-insert member lists in the CGIs (now sorted once after
+  loading), and group membership tests that walked the member list.
+  With a 60,000-service servicegroup, every CGI request went from ~11s
+  to ~2s, and servicegroup-filtered queries from ~19s to ~2s. Outputs
+  (and the daemon's precached object file) verified identical before
+  and after.
+
 * Tue Sep 29 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama42
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama42)
 - webui fixes found while testing kuriyama41/42 on a real install:
