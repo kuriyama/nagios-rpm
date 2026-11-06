@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama43
+Release:        3%{?dist}.kuriyama44
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,30 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Fri Nov 06 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama44
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama44)
+- objectjson.cgi: add query=authorizedviewers (hostname=[,
+  servicedescription=]) listing which login users may view a host or
+  service, and query=authorizedobjects (username=) listing what one user
+  may view, each with the reasons (contact, contactgroup, escalation,
+  authorized_for_all_* in cgi.cfg, via the parent host, ...). The
+  decision itself is cgiauth's is_authorized_for_*(). Only users with
+  configuration information and all hosts/services access may use them.
+  extinfo.cgi host/service pages link to the JSON for those users.
+- statusjson.cgi: apply view authorization to query=host/service/comment/
+  downtime and to commentlist/commentcount/downtimelist/downtimecount,
+  which returned objects the user could not see in extinfo.cgi. They now
+  answer "Not Authorized" or leave such objects out.
+- statusjson.cgi: servicelist/servicecount no longer require access to
+  the service's host; a service is listed when the user may view it, as
+  in status.cgi.
+- JSON CGIs: names containing '%' (e.g. "disk /var 50%") were dropped
+  from JSON arrays, and some could crash the CGI; they are now output
+  as is.
+- Keep $HOSTPROBLEMID$ across host problem-to-problem state changes
+  (e.g. UNREACHABLE to DOWN) instead of resetting it to 0 (upstream
+  #1061).
+
 * Tue Oct 06 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama43
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama43)
 - webui: show both Host and Service Status Totals side by side on the
