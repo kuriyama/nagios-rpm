@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama45
+Release:        3%{?dist}.kuriyama46
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,25 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Sat Nov 14 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama46
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama46)
+- webui: Hosts, Services, Scheduling Queue and Notifications render one
+  page at a time (100/250/1000/All per page, like status.cgi's
+  result_limit) instead of every row, which dominated browser memory and
+  render time on large installs (Services with 40,000 rows: DOM nodes
+  710k to 2.2k, first render 4.1s to 0.39s in a mock). All rows are still
+  fetched, sorted and filtered.
+- webui: those views get a filter box that narrows as you type:
+  case-insensitive, space-separated words ANDed, with column prefixes
+  (host:, service:/svc:, status:, output:, address:, contact:, type:,
+  ...), -word to exclude and "quoted phrases"; matches are highlighted.
+  Ctrl-F or "/" focuses it, Esc clears, PageUp/PageDown change page; the
+  filter, page and page size are kept in the URL hash.
+- webui: Scheduling Queue fetches only the 5 fields it shows.
+- webui: list views no longer refresh while their tab is hidden, so tabs
+  left open in the background stop re-running the CGIs every 90s; they
+  refresh at once when shown again if due.
+
 * Sat Nov 14 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama45
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama45)
 - webui: list views (Hosts, Services, Comments, Downtime, Process Info,
