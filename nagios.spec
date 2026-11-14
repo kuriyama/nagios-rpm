@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama44
+Release:        3%{?dist}.kuriyama45
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,17 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Sat Nov 14 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama45
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama45)
+- webui: list views (Hosts, Services, Comments, Downtime, Process Info,
+  Notifications, Scheduling Queue) show "Last updated: <time> (Ns ago)"
+  right under the heading, highlighted once the data is older than two
+  refresh intervals or the last refresh failed. Auto-refresh now goes by
+  wall-clock time, so after resuming from sleep or re-showing the tab it
+  refreshes at once instead of up to an interval later; a failed refresh
+  is retried after 15s and on the browser's online event, and a request
+  that never returns no longer stops refreshing.
+
 * Fri Nov 06 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama44
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama44)
 - objectjson.cgi: add query=authorizedviewers (hostname=[,
