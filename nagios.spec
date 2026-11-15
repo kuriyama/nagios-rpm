@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama47
+Release:        3%{?dist}.kuriyama48
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,14 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Sun Nov 15 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama48
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama48)
+- Fix the kuriyama47 build failing in %%prep: nagios.service's
+  Restart=on-failure lines sat inside the context of
+  nagios-0009-fix-localstatedir-for-linux.patch. Moved them where
+  neither that patch nor nagios-0014-fix-uidgid.patch looks; the
+  resulting unit is unchanged otherwise.
+
 * Sun Nov 15 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama47
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama47)
 - webui: warn when status.dat has not been rewritten for over 180s, i.e.
