@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama46
+Release:        3%{?dist}.kuriyama47
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,19 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Sun Nov 15 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama47
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama47)
+- webui: warn when status.dat has not been rewritten for over 180s, i.e.
+  the daemon has most likely died. The CGIs only read status.dat, so a
+  dead daemon's (e.g. OOM-killed) last snapshot kept being shown as if
+  current, and Home kept saying "Daemon running" from its leftover
+  nagios_pid. Uses the status.dat mtime statusjson.cgi already returns
+  as result.last_data_update; list views lead their "Last updated" line
+  with a red warning and Home shows "Not updating".
+- nagios.service: Restart=on-failure (RestartSec=10s), so the daemon is
+  started again after an unexpected exit such as an OOM kill. A normal
+  stop is not restarted.
+
 * Sat Nov 14 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama46
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama46)
 - webui: Hosts, Services, Scheduling Queue and Notifications render one
