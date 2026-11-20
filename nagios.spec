@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama48
+Release:        3%{?dist}.kuriyama49
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,15 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Fri Nov 20 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama49
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama49)
+- Add a nav bar (Home / Hosts / Services / Problems) to the top of every
+  CGI page. Since the frameset was replaced by the SPA, CGI pages such
+  as extinfo.cgi open as full pages without the left nav, so the only
+  way back was the browser's Back button. Installed as
+  html/ssi/common-header.ssi, which every HTML-producing CGI already
+  copies verbatim right after <body>; no CGI code changes.
+
 * Sun Nov 15 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama48
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama48)
 - Fix the kuriyama47 build failing in %%prep: nagios.service's
