@@ -6,7 +6,7 @@
 
 Name:           nagios
 Version:        4.4.14
-Release:        3%{?dist}.kuriyama49
+Release:        3%{?dist}.kuriyama50
 
 Summary: Host/service/network monitoring program
 
@@ -466,6 +466,16 @@ fi
 %{_libdir}/%{name}/cgi/
 
 %changelog
+* Sat Nov 21 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama50
+- Custom build for internal use (nagioscore al2023-4.4.14-kuriyama50)
+- Stop the "Last updated" line flashing its stale / "Nagios is not
+  updating its status data" highlights when returning to a tab (or
+  resuming) after a few minutes. Both are extrapolated on the browser's
+  clock, so they fired before the catch-up refresh had answered. A
+  highlight not already shown is now held back while a refresh is in
+  flight (up to 10s) and appears only if that refresh fails, confirms
+  the data is stale, or hangs.
+
 * Fri Nov 20 2026 Jun Kuriyama <kuriyama@s2factory.co.jp> - 4.4.14-3.amzn2023.kuriyama49
 - Custom build for internal use (nagioscore al2023-4.4.14-kuriyama49)
 - Add a nav bar (Home / Hosts / Services / Problems) to the top of every
